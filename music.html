@@ -1,74 +1,153 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Música - Servidor Local</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 50px;
-      background-color: #f0f0f0;
-      color: #333;
-    }
-    h1 {
-      color: #2e86de;
-    }
-    button {
-      padding: 10px 20px;
-      margin: 10px;
-      font-size: 16px;
-      cursor: pointer;
-      border: none;
-      border-radius: 5px;
-      background-color: #27ae60;
-      color: white;
-      transition: 0.3s;
-    }
-    button:hover {
-      background-color: #2ecc71;
-    }
-    select {
-      padding: 8px;
-      font-size: 14px;
-      border-radius: 4px;
-      border: 1px solid #ccc;
-      margin-bottom: 10px;
-    }
-    iframe {
-      margin-top: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px #ccc;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Music Player</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #74b9ff, #a29bfe);
+    color: #fff;
+    text-align: center;
+    padding: 50px;
+    transition: background 0.5s;
+  }
+
+  h1 {
+    margin-bottom: 20px;
+    font-size: 2.5em;
+    color: #ffeaa7;
+  }
+
+  #player {
+    background: rgba(0,0,0,0.3);
+    padding: 20px;
+    border-radius: 15px;
+    display: inline-block;
+  }
+
+  button {
+    padding: 10px 20px;
+    margin: 5px;
+    font-size: 16px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    background-color: #fd79a8;
+    color: white;
+    transition: 0.3s;
+  }
+
+  button:hover {
+    background-color: #e84393;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+    text-align: left;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  li {
+    background: rgba(0,0,0,0.2);
+    margin: 5px 0;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  li:hover {
+    background: rgba(0,0,0,0.4);
+  }
+
+  #progress {
+    width: 100%;
+    height: 10px;
+    background: rgba(255,255,255,0.3);
+    border-radius: 5px;
+    margin-top: 10px;
+    overflow: hidden;
+  }
+
+  #progressBar {
+    width: 0%;
+    height: 100%;
+    background: #ffeaa7;
+    border-radius: 5px;
+  }
+
+</style>
 </head>
 <body>
-  <h1>🎵 Música en el servidor local</h1>
-  <p>Elegí una canción para reproducir:</p>
+<h1>🎵 Mi Music Player</h1>
 
-  <select id="listaCanciones" onchange="cambiarCancion()">
-    <option value="https://www.youtube.com/embed/3JZ4pnNtyxQ">Billie Eilish - Bad Guy</option>
-    <option value="https://www.youtube.com/embed/kXYiU_JCYtU">Linkin Park - Numb</option>
-    <option value="https://www.youtube.com/embed/fRh_vgS2dFE">Justin Bieber - Sorry</option>
-    <option value="https://www.youtube.com/embed/OPf0YbXqDm0">Bruno Mars - Uptown Funk</option>
-  </select>
-
+<div id="player">
+  <audio id="audio" src=""></audio>
   <div>
-    <iframe id="player" width="560" height="315" src="https://www.youtube.com/embed/3JZ4pnNtyxQ" 
-      title="Reproductor de música" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-    </iframe>
+    <button onclick="prevSong()">⏮️ Anterior</button>
+    <button onclick="togglePlay()">▶️/⏸️ Play/Pause</button>
+    <button onclick="nextSong()">⏭️ Siguiente</button>
   </div>
-
-  <div>
-    <button onclick="location.href='index.html'">Volver al inicio</button>
+  <div id="progress">
+    <div id="progressBar"></div>
   </div>
+  <p id="currentSong">Selecciona una canción</p>
+</div>
 
-  <script>
-    function cambiarCancion() {
-      const select = document.getElementById('listaCanciones');
-      const url = select.value;
-      document.getElementById('player').src = url;
-    }
-  </script>
+<h2>Lista de canciones</h2>
+<ul id="playlist">
+  <li onclick="playSong(0)">Canción 1 - Artista</li>
+  <li onclick="playSong(1)">Canción 2 - Artista</li>
+  <li onclick="playSong(2)">Canción 3 - Artista</li>
+</ul>
+
+<button onclick="location.href='index.html'">Volver al Inicio</button>
+
+<script>
+const songs = [
+  {name: "Canción 1", src: "music/song1.mp3"},
+  {name: "Canción 2", src: "music/song2.mp3"},
+  {name: "Canción 3", src: "music/song3.mp3"},
+];
+
+let currentIndex = 0;
+const audio = document.getElementById("audio");
+const currentSongText = document.getElementById("currentSong");
+const progressBar = document.getElementById("progressBar");
+
+function playSong(index) {
+  currentIndex = index;
+  audio.src = songs[currentIndex].src;
+  audio.play();
+  currentSongText.innerText = `🎶 ${songs[currentIndex].name}`;
+}
+
+function togglePlay() {
+  if(audio.src === "") playSong(currentIndex);
+  else if(audio.paused) audio.play();
+  else audio.pause();
+}
+
+function nextSong() {
+  currentIndex = (currentIndex + 1) % songs.length;
+  playSong(currentIndex);
+}
+
+function prevSong() {
+  currentIndex = (currentIndex - 1 + songs.length) % songs.length;
+  playSong(currentIndex);
+}
+
+// Actualizar barra de progreso
+audio.addEventListener('timeupdate', () => {
+  const percent = (audio.currentTime / audio.duration) * 100;
+  progressBar.style.width = percent + "%";
+});
+</script>
 </body>
 </html>
