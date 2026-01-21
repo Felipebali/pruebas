@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Mini RPG</title>
+<style>
+  body { font-family: Arial; text-align:center; padding:50px; background:#f0f0f0; transition: background 0.3s;}
+  h1 { color: #e17055; }
+  button { padding:10px 20px; margin:5px; border:none; border-radius:5px; background:#6c5ce7; color:white; cursor:pointer; transition:0.3s; }
+  button:hover { background:#a29bfe; }
+  #log { background:#dfe6e9; padding:10px; border-radius:5px; margin-top:20px; max-height:250px; overflow-y:auto; text-align:left; }
+  p { font-weight:bold; }
+</style>
+</head>
+<body>
+
+<h1>Mini RPG 🔥</h1>
+<p>Tu salud: <span id="playerHP">100</span> | Enemigo: <span id="enemyHP">50</span></p>
+
+<button onclick="attack()">Atacar</button>
+<button onclick="heal()">Curar</button>
+<button onclick="restart()">Reiniciar</button>
+<button onclick="location.href='index.html'">Volver al inicio</button>
+
+<div id="log"></div>
+
+<script>
+let playerHP = 100;
+let enemyHP = 50;
+
+function log(msg){
+  const div = document.getElementById('log');
+  div.innerHTML += msg + "<br>";
+  div.scrollTop = div.scrollHeight;
+}
+
+function attack(){
+  if(playerHP <=0 || enemyHP <=0) return;
+  let dmg = Math.floor(Math.random()*20)+5;
+  enemyHP -= dmg;
+  log(`Le hiciste ${dmg} de daño al enemigo`);
+  if(enemyHP <= 0){ log("¡Ganaste! 🎉"); enemyHP=0; updateHP(); return; }
+  enemyAttack();
+  updateHP();
+}
+
+function heal(){
+  if(playerHP <=0 || enemyHP <=0) return;
+  let hp = Math.floor(Math.random()*15)+5;
+  playerHP += hp;
+  if(playerHP>100) playerHP=100;
+  log(`Te curaste ${hp} HP`);
+  enemyAttack();
+  updateHP();
+}
+
+function enemyAttack(){
+  if(enemyHP <=0) return;
+  let dmg = Math.floor(Math.random()*15)+5;
+  playerHP -= dmg;
+  log(`El enemigo te hizo ${dmg} de daño`);
+  if(playerHP<=0){ log("¡Perdiste! 😢"); playerHP=0; }
+}
+
+function updateHP(){
+  document.getElementById('playerHP').innerText = playerHP;
+  document.getElementById('enemyHP').innerText = enemyHP;
+}
+
+function restart(){
+  playerHP=100;
+  enemyHP=50;
+  document.getElementById('log').innerHTML="";
+  updateHP();
+}
+
+updateHP();
+</script>
+</body>
+</html>
