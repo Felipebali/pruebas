@@ -1,80 +1,173 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Mini RPG</title>
-<style>
-  body { font-family: Arial; text-align:center; padding:50px; background:#f0f0f0; transition: background 0.3s;}
-  h1 { color: #e17055; }
-  button { padding:10px 20px; margin:5px; border:none; border-radius:5px; background:#6c5ce7; color:white; cursor:pointer; transition:0.3s; }
-  button:hover { background:#a29bfe; }
-  #log { background:#dfe6e9; padding:10px; border-radius:5px; margin-top:20px; max-height:250px; overflow-y:auto; text-align:left; }
-  p { font-weight:bold; }
-</style>
+  <meta charset="UTF-8">
+  <title>Mini RPG - Servidor Local</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #1e1e2f;
+      color: #f0f0f0;
+      text-align: center;
+      padding: 30px;
+    }
+    h1 {
+      color: #ffce00;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin: 5px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+      background-color: #6a5acd;
+      color: white;
+      transition: 0.3s;
+    }
+    button:hover {
+      background-color: #836fff;
+    }
+    #log {
+      text-align: left;
+      margin: 20px auto;
+      padding: 10px;
+      width: 80%;
+      height: 300px;
+      overflow-y: scroll;
+      background-color: #2e2e44;
+      border-radius: 5px;
+      border: 1px solid #444;
+    }
+    .enemy { color: #ff4d4d; }
+    .player { color: #4dff88; }
+    .info { color: #ffce00; }
+  </style>
 </head>
 <body>
+  <h1>Mini RPG - Servidor Local</h1>
+  <p>¡Combate enemigos, sube de nivel y gana monedas!</p>
 
-<h1>Mini RPG 🔥</h1>
-<p>Tu salud: <span id="playerHP">100</span> | Enemigo: <span id="enemyHP">50</span></p>
+  <div>
+    <button onclick="startBattle()">Iniciar batalla</button>
+    <button onclick="attack()" id="btnAttack" disabled>Atacar</button>
+    <button onclick="heal()" id="btnHeal" disabled>Curar (+20 HP)</button>
+  </div>
 
-<button onclick="attack()">Atacar</button>
-<button onclick="heal()">Curar</button>
-<button onclick="restart()">Reiniciar</button>
-<button onclick="location.href='index.html'">Volver al inicio</button>
+  <p><strong>Jugador:</strong> <span id="playerHP"></span> HP | Nivel: <span id="playerLevel"></span> | Oro: <span id="playerGold"></span></p>
+  <p><strong>Enemigo:</strong> <span id="enemyName"></span> - <span id="enemyHP"></span> HP</p>
 
-<div id="log"></div>
+  <div id="log"></div>
 
-<script>
-let playerHP = 100;
-let enemyHP = 50;
+  <script>
+    // Player stats
+    let player = {
+      hp: 100,
+      maxHp: 100,
+      level: 1,
+      gold: 0,
+      xp: 0
+    };
 
-function log(msg){
-  const div = document.getElementById('log');
-  div.innerHTML += msg + "<br>";
-  div.scrollTop = div.scrollHeight;
-}
+    let enemy = null;
 
-function attack(){
-  if(playerHP <=0 || enemyHP <=0) return;
-  let dmg = Math.floor(Math.random()*20)+5;
-  enemyHP -= dmg;
-  log(`Le hiciste ${dmg} de daño al enemigo`);
-  if(enemyHP <= 0){ log("¡Ganaste! 🎉"); enemyHP=0; updateHP(); return; }
-  enemyAttack();
-  updateHP();
-}
+    const enemies = [
+      { name: "Goblin", hp: 30, attack: 10, gold: 5, xp: 10 },
+      { name: "Slime", hp: 20, attack: 5, gold: 3, xp: 5 },
+      { name: "Orco", hp: 50, attack: 15, gold: 10, xp: 20 },
+      { name: "Dragón", hp: 100, attack: 25, gold: 50, xp: 50 }
+    ];
 
-function heal(){
-  if(playerHP <=0 || enemyHP <=0) return;
-  let hp = Math.floor(Math.random()*15)+5;
-  playerHP += hp;
-  if(playerHP>100) playerHP=100;
-  log(`Te curaste ${hp} HP`);
-  enemyAttack();
-  updateHP();
-}
+    const logDiv = document.getElementById('log');
+    const btnAttack = document.getElementById('btnAttack');
+    const btnHeal = document.getElementById('btnHeal');
 
-function enemyAttack(){
-  if(enemyHP <=0) return;
-  let dmg = Math.floor(Math.random()*15)+5;
-  playerHP -= dmg;
-  log(`El enemigo te hizo ${dmg} de daño`);
-  if(playerHP<=0){ log("¡Perdiste! 😢"); playerHP=0; }
-}
+    function updateUI() {
+      document.getElementById('playerHP').innerText = player.hp + '/' + player.maxHp;
+      document.getElementById('playerLevel').innerText = player.level;
+      document.getElementById('playerGold').innerText = player.gold;
+      if (enemy) {
+        document.getElementById('enemyName').innerText = enemy.name;
+        document.getElementById('enemyHP').innerText = enemy.hp;
+      } else {
+        document.getElementById('enemyName').innerText = "-";
+        document.getElementById('enemyHP').innerText = "-";
+      }
+    }
 
-function updateHP(){
-  document.getElementById('playerHP').innerText = playerHP;
-  document.getElementById('enemyHP').innerText = enemyHP;
-}
+    function log(msg, type="info") {
+      let span = document.createElement('span');
+      if(type === "enemy") span.className = "enemy";
+      else if(type === "player") span.className = "player";
+      else span.className = "info";
+      span.innerText = msg + "\n";
+      logDiv.appendChild(span);
+      logDiv.scrollTop = logDiv.scrollHeight;
+    }
 
-function restart(){
-  playerHP=100;
-  enemyHP=50;
-  document.getElementById('log').innerHTML="";
-  updateHP();
-}
+    function startBattle() {
+      enemy = JSON.parse(JSON.stringify(enemies[Math.floor(Math.random() * enemies.length)]));
+      log(`¡Un ${enemy.name} apareció!`, "enemy");
+      btnAttack.disabled = false;
+      btnHeal.disabled = false;
+      updateUI();
+    }
 
-updateHP();
-</script>
+    function attack() {
+      if(!enemy) return;
+      const playerDamage = Math.floor(Math.random() * 20) + 5;
+      enemy.hp -= playerDamage;
+      log(`Atacaste al ${enemy.name} por ${playerDamage} daño`, "player");
+
+      if(enemy.hp <= 0) {
+        log(`¡Derrotaste al ${enemy.name}!`, "info");
+        player.gold += enemy.gold;
+        player.xp += enemy.xp;
+        log(`Ganaste ${enemy.gold} oro y ${enemy.xp} XP`, "info");
+        enemy = null;
+        btnAttack.disabled = true;
+        btnHeal.disabled = true;
+        levelUp();
+      } else {
+        enemyAttack();
+      }
+      updateUI();
+    }
+
+    function enemyAttack() {
+      const damage = Math.floor(Math.random() * enemy.attack) + 1;
+      player.hp -= damage;
+      log(`El ${enemy.name} te atacó por ${damage} daño`, "enemy");
+      if(player.hp <= 0) {
+        log("¡Has sido derrotado! Reiniciando HP...", "info");
+        player.hp = player.maxHp;
+        player.gold = Math.max(0, player.gold - 10);
+        btnAttack.disabled = true;
+        btnHeal.disabled = true;
+        enemy = null;
+      }
+    }
+
+    function heal() {
+      const healAmount = 20;
+      player.hp = Math.min(player.maxHp, player.hp + healAmount);
+      log(`Te curaste ${healAmount} HP`, "player");
+      enemyAttack();
+      updateUI();
+    }
+
+    function levelUp() {
+      while(player.xp >= player.level * 50) {
+        player.xp -= player.level * 50;
+        player.level++;
+        player.maxHp += 20;
+        player.hp = player.maxHp;
+        log(`¡Subiste al nivel ${player.level}! HP máximo aumentado`, "info");
+      }
+    }
+
+    // Inicializa UI
+    updateUI();
+  </script>
 </body>
 </html>
