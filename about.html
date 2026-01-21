@@ -1,21 +1,87 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>About</title>
+  <title>About - Servidor Local</title>
   <style>
-    body { text-align:center; padding:50px; font-family:Arial; background:#f0f0f0; transition: background 0.5s; }
-    h1 { color: #2e86de; }
-    button { padding:10px 20px; margin:10px; border:none; border-radius:5px; background:#27ae60; color:#fff; cursor:pointer; transition:0.3s; }
-    button:hover { background:#2ecc71; }
-    p { max-width:400px; margin:auto; }
+    :root {
+      --color-fondo: #f0f0f0;
+      --color-principal: #2e86de;
+      --color-secundario: #27ae60;
+      --color-texto: #333;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: var(--color-fondo);
+      color: var(--color-texto);
+      text-align: center;
+      padding: 50px;
+      transition: background-color 0.5s, color 0.5s;
+    }
+
+    h1 {
+      color: var(--color-principal);
+      margin-bottom: 20px;
+    }
+
+    p {
+      max-width: 600px;
+      margin: 0 auto 20px auto;
+      line-height: 1.6;
+      font-size: 18px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin: 10px 5px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+      background-color: var(--color-secundario);
+      color: white;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+    button:hover {
+      background-color: #2ecc71;
+      transform: scale(1.05);
+    }
+
   </style>
 </head>
 <body>
-  <h1>Sobre mi servidor local</h1>
-  <p>Esta es una página secundaria para pruebas y demostraciones de funcionalidades. Desde aquí podés volver al inicio o ir a contacto.</p>
 
-  <button onclick="location.href='index.html'">Volver al Inicio</button>
-  <button onclick="location.href='contact.html'">Ir a Contacto</button>
+  <h1>Sobre mi Servidor Local</h1>
+  <p>¡Hola! Soy Feli, y esto es mi servidor local de pruebas. Aquí puedo experimentar con HTML, CSS y JavaScript para crear páginas interactivas y dinámicas. Cada página tiene funcionalidades como cambio de fondo, reloj en tiempo real, listas de tareas y mucho más.</p>
+  <p>El objetivo de este servidor es aprender y probar ideas, desde páginas estáticas hasta interactividad avanzada. ¡Podés explorar todas las funcionalidades y divertirte mientras aprendes!</p>
+
+  <!-- Navegación -->
+  <div>
+    <button onclick="location.href='index.html'">Volver al inicio</button>
+    <button onclick="location.href='contact.html'">Ir a Contacto</button>
+    <button onclick="cambiarFondo()">Cambiar fondo</button>
+    <button onclick="cambiarTema()">Modo oscuro / claro</button>
+  </div>
+
+  <script>
+    // Fondo dinámico
+    function cambiarFondo() {
+      const colores = ['#f0f0f0','#ffeaa7','#fab1a0','#dfe6e9','#81ecec','#74b9ff','#d63031','#6c5ce7','#fd79a8'];
+      document.body.style.backgroundColor = colores[Math.floor(Math.random()*colores.length)];
+    }
+
+    // Modo oscuro / claro
+    function cambiarTema() {
+      if(document.body.style.backgroundColor === 'rgb(240, 240, 240)' || document.body.style.backgroundColor === ''){
+        document.body.style.backgroundColor = '#2d3436';
+        document.body.style.color = '#dfe6e9';
+      } else {
+        document.body.style.backgroundColor = '#f0f0f0';
+        document.body.style.color = '#333';
+      }
+    }
+  </script>
+
 </body>
 </html>
