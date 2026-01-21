@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
   <meta charset="UTF-8">
-  <title>Servidor Local Ultra Mejorado</title>
+  <title>Servidor Local Mejorado</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -46,134 +46,65 @@
       padding: 8px;
       border-radius: 4px;
     }
-    /* Nuevo estilo de secciones */
-    section {
-      margin: 30px 0;
-      padding: 20px;
-      background: #ffffffaa;
-      border-radius: 10px;
-      box-shadow: 0 0 10px #ccc;
-    }
   </style>
 </head>
 <body>
   <h1>Servidor local en funcionamiento ✅</h1>
   <p>¡Bienvenido a tus pruebas, Feli!</p>
 
-  <!-- SECCIÓN: Hora y fecha -->
-  <section>
-    <h2>Hora y fecha</h2>
-    <button onclick="mostrarHora()">Mostrar hora y fecha actual</button>
-    <p id="hora"></p>
-  </section>
+  <!-- Mostrar hora y fecha -->
+  <button onclick="mostrarHora()">Mostrar hora y fecha actual</button>
+  <p id="hora"></p>
 
-  <!-- SECCIÓN: Mensajes -->
-  <section>
-    <h2>Mensajes</h2>
-    <button onclick="alert('¡Hola Feli! Esto es un mensaje de prueba.')">Mensaje de prueba</button>
-  </section>
+  <!-- Mensaje de prueba -->
+  <button onclick="alert('¡Hola Feli! Esto es un mensaje de prueba.')">Mensaje de prueba</button>
 
-  <!-- SECCIÓN: Fondo -->
-  <section>
-    <h2>Fondo dinámico</h2>
-    <button onclick="cambiarFondo()">Cambiar fondo</button>
-  </section>
+  <!-- Cambiar color de fondo -->
+  <button onclick="cambiarFondo()">Cambiar fondo</button>
 
-  <!-- SECCIÓN: Lista de tareas -->
-  <section>
-    <h2>Lista de tareas</h2>
-    <input type="text" id="tareaInput" placeholder="Escribe una tarea">
-    <button onclick="agregarTarea()">Agregar</button>
-    <ul id="tareas"></ul>
-    <button onclick="guardarTareas()">Guardar tareas en localStorage</button>
-    <button onclick="cargarTareas()">Cargar tareas guardadas</button>
-  </section>
+  <!-- Lista de tareas -->
+  <h2>Lista de tareas</h2>
+  <input type="text" id="tareaInput" placeholder="Escribe una tarea">
+  <button onclick="agregarTarea()">Agregar</button>
+  <ul id="tareas"></ul>
 
-  <!-- SECCIÓN: Pedir nombre -->
-  <section>
-    <h2>Tu nombre</h2>
-    <button onclick="preguntarNombre()">Decime tu nombre</button>
-  </section>
+  <!-- Botón para otras páginas -->
+  <button onclick="location.href='about.html'">Ir a About</button>
+  <button onclick="location.href='contact.html'">Ir a Contact</button>
+  <button onclick="location.href='gallery.html'">Ir a Gallery</button>
+  <button onclick="location.href='tasks.html'">Ir a Tasks</button>
 
-  <!-- SECCIÓN: Navegación -->
-  <section>
-    <h2>Páginas vinculadas</h2>
-    <button onclick="location.href='about.html'">About</button>
-    <button onclick="location.href='contact.html'">Contacto</button>
-    <button onclick="location.href='gallery.html'">Galería</button>
-    <button onclick="location.href='music.html'">Música</button>
-    <button onclick="location.href='tasks.html'">Tareas</button>
-  </section>
-
-  <!-- SECCIÓN: Mini juegos -->
-  <section>
-    <h2>Mini juegos</h2>
-    <button onclick="adivinaNumero()">Adivina el número (1-10)</button>
-    <p id="adivinanza"></p>
-  </section>
+  <!-- Pedir nombre al usuario -->
+  <button onclick="preguntarNombre()">Decime tu nombre</button>
 
   <script>
-    // Hora y fecha
     function mostrarHora() {
       const ahora = new Date();
-      document.getElementById('hora').innerText = `Fecha: ${ahora.toLocaleDateString()} | Hora: ${ahora.toLocaleTimeString()}`;
+      const hora = ahora.toLocaleTimeString();
+      const fecha = ahora.toLocaleDateString();
+      document.getElementById('hora').innerText = `Fecha: ${fecha} | Hora: ${hora}`;
     }
 
-    // Cambiar fondo
     function cambiarFondo() {
-      const colores = ['#f0f0f0','#ffeaa7','#fab1a0','#dfe6e9','#81ecec','#74b9ff','#fd79a8','#a29bfe'];
-      document.body.style.backgroundColor = colores[Math.floor(Math.random() * colores.length)];
+      const colores = ['#f0f0f0', '#ffeaa7', '#fab1a0', '#dfe6e9', '#81ecec', '#74b9ff'];
+      const color = colores[Math.floor(Math.random() * colores.length)];
+      document.body.style.backgroundColor = color;
     }
 
-    // Lista de tareas
     function agregarTarea() {
       const input = document.getElementById('tareaInput');
       const tarea = input.value.trim();
-      if(tarea==='') return;
+      if(tarea === '') return;
       const li = document.createElement('li');
       li.innerText = tarea;
       document.getElementById('tareas').appendChild(li);
-      input.value='';
+      input.value = '';
     }
 
-    function guardarTareas() {
-      const lis = document.querySelectorAll('#tareas li');
-      const tareas = [];
-      lis.forEach(li => tareas.push(li.innerText));
-      localStorage.setItem('tareas', JSON.stringify(tareas));
-      alert('Tareas guardadas ✅');
-    }
-
-    function cargarTareas() {
-      const tareas = JSON.parse(localStorage.getItem('tareas') || '[]');
-      const ul = document.getElementById('tareas');
-      ul.innerHTML='';
-      tareas.forEach(t => {
-        const li = document.createElement('li');
-        li.innerText = t;
-        ul.appendChild(li);
-      });
-    }
-
-    // Pedir nombre
     function preguntarNombre() {
       const nombre = prompt("¿Cuál es tu nombre?");
       if(nombre) alert(`Hola ${nombre}, ¡bienvenido al servidor local!`);
     }
-
-    // Mini juego: adivina número
-    function adivinaNumero() {
-      const numero = Math.floor(Math.random() * 10) + 1;
-      const respuesta = prompt("Adiviná un número del 1 al 10");
-      if(respuesta == numero) {
-        document.getElementById('adivinanza').innerText = `¡Correcto! Era ${numero} 🎉`;
-      } else {
-        document.getElementById('adivinanza').innerText = `Incorrecto. Era ${numero} 😅`;
-      }
-    }
-
-    // Cargar tareas automáticamente al iniciar
-    window.onload = cargarTareas;
   </script>
 </body>
 </html>
