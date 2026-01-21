@@ -2,23 +2,44 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Servidor Local Súper Mejorado</title>
+<title>Servidor Local Super Mejorado</title>
 <style>
   body {
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    background: linear-gradient(120deg, #f0f0f0, #81ecec);
+    background-size: 400% 400%;
     color: #333;
     text-align: center;
-    padding: 40px;
-    transition: background-color 0.5s, color 0.5s;
+    padding: 50px;
+    transition: background 1s;
+    animation: gradientAnim 15s ease infinite;
   }
-  h1 {
-    color: #2e86de;
+
+  @keyframes gradientAnim {
+    0% {background-position:0% 50%;}
+    50% {background-position:100% 50%;}
+    100% {background-position:0% 50%;}
   }
+
+  h1 { color: #2e86de; margin-bottom: 10px; }
+  h2 { color: #e17055; }
+
+  nav button {
+    padding: 10px 15px;
+    margin: 5px;
+    border: none;
+    border-radius: 6px;
+    background-color: #0984e3;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  nav button:hover { background-color: #74b9ff; }
+
   button {
     padding: 10px 20px;
     font-size: 16px;
-    margin: 8px;
+    margin: 10px;
     cursor: pointer;
     border: none;
     border-radius: 5px;
@@ -27,34 +48,49 @@
     transition: background-color 0.3s;
   }
   button:hover { background-color: #2ecc71; }
-  input, textarea {
-    padding: 8px;
-    font-size: 14px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    margin: 5px;
-  }
+
+  input { padding: 8px; font-size: 14px; border-radius: 4px; border: 1px solid #ccc; margin-right: 5px; }
   ul { list-style: none; padding: 0; }
   li { background: #dfe6e9; margin: 5px 0; padding: 8px; border-radius: 4px; }
-  #motivacion { font-style: italic; color: #6c5ce7; margin: 20px 0; }
-  #reloj { font-size: 24px; margin: 15px 0; color: #e17055; }
+
+  #toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #00b894;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 6px;
+    display: none;
+    opacity: 0.9;
+    font-weight: bold;
+  }
+
+  audio { margin-top: 10px; }
 </style>
 </head>
 <body>
 
-<h1>Servidor local Súper Mejorado ✅</h1>
-<p>¡Bienvenido a tus pruebas, Feli!</p>
+<h1>Servidor local super mejorado ✅</h1>
+<p id="bienvenida">¡Bienvenido a tus pruebas, Feli!</p>
 
-<!-- Hora y fecha -->
-<button onclick="mostrarHora()">Mostrar hora y fecha actual</button>
-<p id="hora"></p>
+<!-- Navegación -->
+<nav>
+  <button onclick="location.href='index.html'">Inicio</button>
+  <button onclick="location.href='about.html'">About</button>
+  <button onclick="location.href='contact.html'">Contact</button>
+  <button onclick="location.href='gallery.html'">Gallery</button>
+  <button onclick="location.href='tasks.html'">Tasks</button>
+</nav>
+
+<hr>
+
+<!-- Reloj -->
+<h2>Reloj digital</h2>
+<p id="reloj"></p>
 
 <!-- Mensaje de prueba -->
-<button onclick="alert('¡Hola Feli! Esto es un mensaje de prueba.')">Mensaje de prueba</button>
-
-<!-- Cambiar fondo -->
-<button onclick="cambiarFondo()">Cambiar fondo aleatorio</button>
-<button onclick="toggleModo()">Modo Día/Noche</button>
+<button onclick="mostrarToast('¡Hola Feli! Esto es un mensaje de prueba.')">Mensaje de prueba</button>
 
 <!-- Lista de tareas -->
 <h2>Lista de tareas</h2>
@@ -62,102 +98,85 @@
 <button onclick="agregarTarea()">Agregar</button>
 <ul id="tareas"></ul>
 
+<!-- Cambiar fondo -->
+<button onclick="cambiarFondo()">Cambiar fondo</button>
+
 <!-- Pedir nombre -->
 <button onclick="preguntarNombre()">Decime tu nombre</button>
 
-<!-- Motivación aleatoria -->
-<div id="motivacion">💡 Mensaje motivacional aparecerá aquí</div>
-<button onclick="mostrarMotivacion()">Mostrar motivación</button>
-
-<!-- Mini reproductor -->
-<h2>Reproductor de música</h2>
-<audio id="musica" controls>
-  <source src="audio/musica.mp3" type="audio/mpeg">
+<!-- Reproductor de audio -->
+<h2>Música</h2>
+<audio controls>
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
   Tu navegador no soporta audio.
 </audio>
-<button onclick="playMusica()">▶ Reproducir</button>
-<button onclick="pauseMusica()">⏸ Pausar</button>
 
-<!-- Mini reloj digital -->
-<div id="reloj"></div>
-
-<!-- Navegación -->
-<h2>Páginas</h2>
-<button onclick="location.href='about.html'">About</button>
-<button onclick="location.href='contact.html'">Contact</button>
-<button onclick="location.href='gallery.html'">Galería</button>
+<!-- Toast -->
+<div id="toast"></div>
 
 <script>
-// Hora y fecha
-function mostrarHora() {
-  const ahora = new Date();
-  const hora = ahora.toLocaleTimeString();
-  const fecha = ahora.toLocaleDateString();
-  document.getElementById('hora').innerText = `Fecha: ${fecha} | Hora: ${hora}`;
-}
-
-// Fondo aleatorio
-function cambiarFondo() {
-  const colores = ['#f0f0f0','#ffeaa7','#fab1a0','#dfe6e9','#81ecec','#74b9ff','#a29bfe','#fd79a8'];
-  document.body.style.backgroundColor = colores[Math.floor(Math.random()*colores.length)];
-}
-
-// Modo día/noche
-let modoNoche = false;
-function toggleModo() {
-  modoNoche = !modoNoche;
-  if(modoNoche) {
-    document.body.style.backgroundColor = '#2d3436';
-    document.body.style.color = '#dfe6e9';
-  } else {
-    document.body.style.backgroundColor = '#f0f0f0';
-    document.body.style.color = '#333';
+  // ==== Reloj en tiempo real ====
+  function actualizarReloj() {
+    const ahora = new Date();
+    document.getElementById('reloj').innerText = ahora.toLocaleTimeString();
   }
-}
+  setInterval(actualizarReloj, 1000);
+  actualizarReloj();
 
-// Lista de tareas
-function agregarTarea() {
-  const input = document.getElementById('tareaInput');
-  const tarea = input.value.trim();
-  if(tarea==='') return;
-  const li = document.createElement('li');
-  li.innerText = tarea;
-  document.getElementById('tareas').appendChild(li);
-  input.value='';
-}
+  // ==== Toast ====
+  function mostrarToast(msg) {
+    const t = document.getElementById('toast');
+    t.innerText = msg;
+    t.style.display = 'block';
+    setTimeout(() => t.style.display = 'none', 3000);
+  }
 
-// Pedir nombre
-function preguntarNombre() {
-  const nombre = prompt("¿Cuál es tu nombre?");
-  if(nombre) alert(`Hola ${nombre}, ¡bienvenido al servidor local!`);
-}
+  // ==== Fondo aleatorio ====
+  function cambiarFondo() {
+    const colores = ['#f0f0f0', '#ffeaa7', '#fab1a0', '#dfe6e9', '#81ecec', '#74b9ff', '#fd79a8'];
+    const color = colores[Math.floor(Math.random() * colores.length)];
+    document.body.style.background = color;
+  }
 
-// Mensajes motivacionales
-const motivaciones = [
-  "💪 Cree en ti mismo.",
-  "🚀 Nunca dejes de aprender.",
-  "✨ Cada día es una nueva oportunidad.",
-  "🔥 Haz lo que amas.",
-  "🌈 La creatividad es la clave.",
-];
-function mostrarMotivacion() {
-  const msg = motivaciones[Math.floor(Math.random()*motivaciones.length)];
-  document.getElementById('motivacion').innerText = msg;
-}
+  // ==== Lista de tareas con localStorage ====
+  const tareasList = document.getElementById('tareas');
+  function agregarTarea() {
+    const input = document.getElementById('tareaInput');
+    const tarea = input.value.trim();
+    if(!tarea) return;
+    const li = document.createElement('li');
+    li.innerText = tarea;
+    tareasList.appendChild(li);
+    guardarTareas();
+    input.value = '';
+  }
+  function guardarTareas() {
+    const tareas = [];
+    tareasList.querySelectorAll('li').forEach(li => tareas.push(li.innerText));
+    localStorage.setItem('tareas', JSON.stringify(tareas));
+  }
+  function cargarTareas() {
+    const tareas = JSON.parse(localStorage.getItem('tareas') || '[]');
+    tareas.forEach(t => {
+      const li = document.createElement('li');
+      li.innerText = t;
+      tareasList.appendChild(li);
+    });
+  }
+  cargarTareas();
 
-// Mini reproductor
-const musica = document.getElementById('musica');
-function playMusica() { musica.play(); }
-function pauseMusica() { musica.pause(); }
-
-// Mini reloj digital animado
-function actualizarReloj() {
-  const ahora = new Date();
-  const hora = ahora.toLocaleTimeString();
-  document.getElementById('reloj').innerText = hora;
-  setTimeout(actualizarReloj,1000);
-}
-actualizarReloj();
+  // ==== Pedir nombre ====
+  function preguntarNombre() {
+    const nombre = prompt("¿Cuál es tu nombre?");
+    if(nombre) {
+      document.getElementById('bienvenida').innerText = `¡Bienvenido ${nombre} al servidor local!`;
+      mostrarToast(`Hola ${nombre}, tu nombre ha sido guardado`);
+      localStorage.setItem('nombreUsuario', nombre);
+    }
+  }
+  // Cargar nombre si existe
+  const nombreGuardado = localStorage.getItem('nombreUsuario');
+  if(nombreGuardado) document.getElementById('bienvenida').innerText = `¡Bienvenido ${nombreGuardado} al servidor local!`;
 </script>
 
 </body>
