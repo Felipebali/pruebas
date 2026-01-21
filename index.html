@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Servidor Local</title>
+  <title>Servidor Local Mejorado</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -10,6 +10,7 @@
       color: #333;
       text-align: center;
       padding: 50px;
+      transition: background-color 0.5s;
     }
     h1 {
       color: #2e86de;
@@ -23,9 +24,27 @@
       border-radius: 5px;
       background-color: #27ae60;
       color: white;
+      transition: background-color 0.3s;
     }
     button:hover {
       background-color: #2ecc71;
+    }
+    input {
+      padding: 8px;
+      font-size: 14px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      margin-right: 5px;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      background: #dfe6e9;
+      margin: 5px 0;
+      padding: 8px;
+      border-radius: 4px;
     }
   </style>
 </head>
@@ -33,15 +52,59 @@
   <h1>Servidor local en funcionamiento ✅</h1>
   <p>¡Bienvenido a tus pruebas, Feli!</p>
 
-  <button onclick="mostrarHora()">Mostrar hora actual</button>
+  <!-- Mostrar hora y fecha -->
+  <button onclick="mostrarHora()">Mostrar hora y fecha actual</button>
   <p id="hora"></p>
 
+  <!-- Mensaje de prueba -->
   <button onclick="alert('¡Hola Feli! Esto es un mensaje de prueba.')">Mensaje de prueba</button>
 
+  <!-- Cambiar color de fondo -->
+  <button onclick="cambiarFondo()">Cambiar fondo</button>
+
+  <!-- Lista de tareas -->
+  <h2>Lista de tareas</h2>
+  <input type="text" id="tareaInput" placeholder="Escribe una tarea">
+  <button onclick="agregarTarea()">Agregar</button>
+  <ul id="tareas"></ul>
+
+  <!-- Botón para otra página -->
+  <button onclick="location.href='about.html'">Ir a About</button>
+
+  <!-- Pedir nombre al usuario -->
+  <button onclick="preguntarNombre()">Decime tu nombre</button>
+
   <script>
+    // Mostrar hora y fecha
     function mostrarHora() {
       const ahora = new Date();
-      document.getElementById('hora').innerText = "Hora actual: " + ahora.toLocaleTimeString();
+      const hora = ahora.toLocaleTimeString();
+      const fecha = ahora.toLocaleDateString();
+      document.getElementById('hora').innerText = `Fecha: ${fecha} | Hora: ${hora}`;
+    }
+
+    // Cambiar fondo aleatorio
+    function cambiarFondo() {
+      const colores = ['#f0f0f0', '#ffeaa7', '#fab1a0', '#dfe6e9', '#81ecec', '#74b9ff'];
+      const color = colores[Math.floor(Math.random() * colores.length)];
+      document.body.style.backgroundColor = color;
+    }
+
+    // Lista de tareas
+    function agregarTarea() {
+      const input = document.getElementById('tareaInput');
+      const tarea = input.value.trim();
+      if(tarea === '') return;
+      const li = document.createElement('li');
+      li.innerText = tarea;
+      document.getElementById('tareas').appendChild(li);
+      input.value = '';
+    }
+
+    // Pedir nombre al usuario
+    function preguntarNombre() {
+      const nombre = prompt("¿Cuál es tu nombre?");
+      if(nombre) alert(`Hola ${nombre}, ¡bienvenido al servidor local!`);
     }
   </script>
 </body>
