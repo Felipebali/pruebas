@@ -1,183 +1,179 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>Servidor Local Super Mejorado</title>
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    background: linear-gradient(120deg, #f0f0f0, #81ecec);
-    background-size: 400% 400%;
-    color: #333;
-    text-align: center;
-    padding: 50px;
-    transition: background 1s;
-    animation: gradientAnim 15s ease infinite;
-  }
-
-  @keyframes gradientAnim {
-    0% {background-position:0% 50%;}
-    50% {background-position:100% 50%;}
-    100% {background-position:0% 50%;}
-  }
-
-  h1 { color: #2e86de; margin-bottom: 10px; }
-  h2 { color: #e17055; }
-
-  nav button {
-    padding: 10px 15px;
-    margin: 5px;
-    border: none;
-    border-radius: 6px;
-    background-color: #0984e3;
-    color: white;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-  nav button:hover { background-color: #74b9ff; }
-
-  button {
-    padding: 10px 20px;
-    font-size: 16px;
-    margin: 10px;
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
-    background-color: #27ae60;
-    color: white;
-    transition: background-color 0.3s;
-  }
-  button:hover { background-color: #2ecc71; }
-
-  input { padding: 8px; font-size: 14px; border-radius: 4px; border: 1px solid #ccc; margin-right: 5px; }
-  ul { list-style: none; padding: 0; }
-  li { background: #dfe6e9; margin: 5px 0; padding: 8px; border-radius: 4px; }
-
-  #toast {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: #00b894;
-    color: white;
-    padding: 12px 20px;
-    border-radius: 6px;
-    display: none;
-    opacity: 0.9;
-    font-weight: bold;
-  }
-
-  audio { margin-top: 10px; }
-</style>
+  <meta charset="UTF-8">
+  <title>Servidor Local Ultra Mejorado</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      color: #333;
+      text-align: center;
+      padding: 50px;
+      transition: background-color 0.5s;
+    }
+    h1 {
+      color: #2e86de;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin: 10px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+      background-color: #27ae60;
+      color: white;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #2ecc71;
+    }
+    input {
+      padding: 8px;
+      font-size: 14px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      margin-right: 5px;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      background: #dfe6e9;
+      margin: 5px 0;
+      padding: 8px;
+      border-radius: 4px;
+    }
+    /* Nuevo estilo de secciones */
+    section {
+      margin: 30px 0;
+      padding: 20px;
+      background: #ffffffaa;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #ccc;
+    }
+  </style>
 </head>
 <body>
+  <h1>Servidor local en funcionamiento ✅</h1>
+  <p>¡Bienvenido a tus pruebas, Feli!</p>
 
-<h1>Servidor local super mejorado ✅</h1>
-<p id="bienvenida">¡Bienvenido a tus pruebas, Feli!</p>
+  <!-- SECCIÓN: Hora y fecha -->
+  <section>
+    <h2>Hora y fecha</h2>
+    <button onclick="mostrarHora()">Mostrar hora y fecha actual</button>
+    <p id="hora"></p>
+  </section>
 
-<!-- Navegación -->
-<nav>
-  <button onclick="location.href='index.html'">Inicio</button>
-  <button onclick="location.href='about.html'">About</button>
-  <button onclick="location.href='contact.html'">Contact</button>
-  <button onclick="location.href='gallery.html'">Gallery</button>
-  <button onclick="location.href='tasks.html'">Tasks</button>
-</nav>
+  <!-- SECCIÓN: Mensajes -->
+  <section>
+    <h2>Mensajes</h2>
+    <button onclick="alert('¡Hola Feli! Esto es un mensaje de prueba.')">Mensaje de prueba</button>
+  </section>
 
-<hr>
+  <!-- SECCIÓN: Fondo -->
+  <section>
+    <h2>Fondo dinámico</h2>
+    <button onclick="cambiarFondo()">Cambiar fondo</button>
+  </section>
 
-<!-- Reloj -->
-<h2>Reloj digital</h2>
-<p id="reloj"></p>
+  <!-- SECCIÓN: Lista de tareas -->
+  <section>
+    <h2>Lista de tareas</h2>
+    <input type="text" id="tareaInput" placeholder="Escribe una tarea">
+    <button onclick="agregarTarea()">Agregar</button>
+    <ul id="tareas"></ul>
+    <button onclick="guardarTareas()">Guardar tareas en localStorage</button>
+    <button onclick="cargarTareas()">Cargar tareas guardadas</button>
+  </section>
 
-<!-- Mensaje de prueba -->
-<button onclick="mostrarToast('¡Hola Feli! Esto es un mensaje de prueba.')">Mensaje de prueba</button>
+  <!-- SECCIÓN: Pedir nombre -->
+  <section>
+    <h2>Tu nombre</h2>
+    <button onclick="preguntarNombre()">Decime tu nombre</button>
+  </section>
 
-<!-- Lista de tareas -->
-<h2>Lista de tareas</h2>
-<input type="text" id="tareaInput" placeholder="Escribe una tarea">
-<button onclick="agregarTarea()">Agregar</button>
-<ul id="tareas"></ul>
+  <!-- SECCIÓN: Navegación -->
+  <section>
+    <h2>Páginas vinculadas</h2>
+    <button onclick="location.href='about.html'">About</button>
+    <button onclick="location.href='contact.html'">Contacto</button>
+    <button onclick="location.href='gallery.html'">Galería</button>
+    <button onclick="location.href='music.html'">Música</button>
+    <button onclick="location.href='tasks.html'">Tareas</button>
+  </section>
 
-<!-- Cambiar fondo -->
-<button onclick="cambiarFondo()">Cambiar fondo</button>
+  <!-- SECCIÓN: Mini juegos -->
+  <section>
+    <h2>Mini juegos</h2>
+    <button onclick="adivinaNumero()">Adivina el número (1-10)</button>
+    <p id="adivinanza"></p>
+  </section>
 
-<!-- Pedir nombre -->
-<button onclick="preguntarNombre()">Decime tu nombre</button>
-
-<!-- Reproductor de audio -->
-<h2>Música</h2>
-<audio controls>
-  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-  Tu navegador no soporta audio.
-</audio>
-
-<!-- Toast -->
-<div id="toast"></div>
-
-<script>
-  // ==== Reloj en tiempo real ====
-  function actualizarReloj() {
-    const ahora = new Date();
-    document.getElementById('reloj').innerText = ahora.toLocaleTimeString();
-  }
-  setInterval(actualizarReloj, 1000);
-  actualizarReloj();
-
-  // ==== Toast ====
-  function mostrarToast(msg) {
-    const t = document.getElementById('toast');
-    t.innerText = msg;
-    t.style.display = 'block';
-    setTimeout(() => t.style.display = 'none', 3000);
-  }
-
-  // ==== Fondo aleatorio ====
-  function cambiarFondo() {
-    const colores = ['#f0f0f0', '#ffeaa7', '#fab1a0', '#dfe6e9', '#81ecec', '#74b9ff', '#fd79a8'];
-    const color = colores[Math.floor(Math.random() * colores.length)];
-    document.body.style.background = color;
-  }
-
-  // ==== Lista de tareas con localStorage ====
-  const tareasList = document.getElementById('tareas');
-  function agregarTarea() {
-    const input = document.getElementById('tareaInput');
-    const tarea = input.value.trim();
-    if(!tarea) return;
-    const li = document.createElement('li');
-    li.innerText = tarea;
-    tareasList.appendChild(li);
-    guardarTareas();
-    input.value = '';
-  }
-  function guardarTareas() {
-    const tareas = [];
-    tareasList.querySelectorAll('li').forEach(li => tareas.push(li.innerText));
-    localStorage.setItem('tareas', JSON.stringify(tareas));
-  }
-  function cargarTareas() {
-    const tareas = JSON.parse(localStorage.getItem('tareas') || '[]');
-    tareas.forEach(t => {
-      const li = document.createElement('li');
-      li.innerText = t;
-      tareasList.appendChild(li);
-    });
-  }
-  cargarTareas();
-
-  // ==== Pedir nombre ====
-  function preguntarNombre() {
-    const nombre = prompt("¿Cuál es tu nombre?");
-    if(nombre) {
-      document.getElementById('bienvenida').innerText = `¡Bienvenido ${nombre} al servidor local!`;
-      mostrarToast(`Hola ${nombre}, tu nombre ha sido guardado`);
-      localStorage.setItem('nombreUsuario', nombre);
+  <script>
+    // Hora y fecha
+    function mostrarHora() {
+      const ahora = new Date();
+      document.getElementById('hora').innerText = `Fecha: ${ahora.toLocaleDateString()} | Hora: ${ahora.toLocaleTimeString()}`;
     }
-  }
-  // Cargar nombre si existe
-  const nombreGuardado = localStorage.getItem('nombreUsuario');
-  if(nombreGuardado) document.getElementById('bienvenida').innerText = `¡Bienvenido ${nombreGuardado} al servidor local!`;
-</script>
 
+    // Cambiar fondo
+    function cambiarFondo() {
+      const colores = ['#f0f0f0','#ffeaa7','#fab1a0','#dfe6e9','#81ecec','#74b9ff','#fd79a8','#a29bfe'];
+      document.body.style.backgroundColor = colores[Math.floor(Math.random() * colores.length)];
+    }
+
+    // Lista de tareas
+    function agregarTarea() {
+      const input = document.getElementById('tareaInput');
+      const tarea = input.value.trim();
+      if(tarea==='') return;
+      const li = document.createElement('li');
+      li.innerText = tarea;
+      document.getElementById('tareas').appendChild(li);
+      input.value='';
+    }
+
+    function guardarTareas() {
+      const lis = document.querySelectorAll('#tareas li');
+      const tareas = [];
+      lis.forEach(li => tareas.push(li.innerText));
+      localStorage.setItem('tareas', JSON.stringify(tareas));
+      alert('Tareas guardadas ✅');
+    }
+
+    function cargarTareas() {
+      const tareas = JSON.parse(localStorage.getItem('tareas') || '[]');
+      const ul = document.getElementById('tareas');
+      ul.innerHTML='';
+      tareas.forEach(t => {
+        const li = document.createElement('li');
+        li.innerText = t;
+        ul.appendChild(li);
+      });
+    }
+
+    // Pedir nombre
+    function preguntarNombre() {
+      const nombre = prompt("¿Cuál es tu nombre?");
+      if(nombre) alert(`Hola ${nombre}, ¡bienvenido al servidor local!`);
+    }
+
+    // Mini juego: adivina número
+    function adivinaNumero() {
+      const numero = Math.floor(Math.random() * 10) + 1;
+      const respuesta = prompt("Adiviná un número del 1 al 10");
+      if(respuesta == numero) {
+        document.getElementById('adivinanza').innerText = `¡Correcto! Era ${numero} 🎉`;
+      } else {
+        document.getElementById('adivinanza').innerText = `Incorrecto. Era ${numero} 😅`;
+      }
+    }
+
+    // Cargar tareas automáticamente al iniciar
+    window.onload = cargarTareas;
+  </script>
 </body>
 </html>
