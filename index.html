@@ -1,79 +1,175 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Servidor Local Mejorado</title>
+  <title>Servidor Local Super Mejorado</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f0f0f0;
-      color: #333;
-      text-align: center;
-      padding: 50px;
-      transition: background-color 0.5s;
+    :root {
+      --color-fondo: #f0f0f0;
+      --color-principal: #2e86de;
+      --color-secundario: #27ae60;
+      --color-texto: #333;
     }
-    h1 { color: #2e86de; }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: var(--color-fondo);
+      color: var(--color-texto);
+      text-align: center;
+      padding: 40px;
+      transition: background-color 0.5s, color 0.5s;
+    }
+
+    h1 { color: var(--color-principal); }
+    h2 { color: var(--color-principal); margin-top:30px; }
+
     button {
       padding: 10px 20px;
       font-size: 16px;
-      margin: 10px;
+      margin: 10px 5px;
       cursor: pointer;
       border: none;
       border-radius: 5px;
-      background-color: #27ae60;
+      background-color: var(--color-secundario);
       color: white;
-      transition: background-color 0.3s;
+      transition: background-color 0.3s, transform 0.2s;
     }
-    button:hover { background-color: #2ecc71; }
-    input { padding: 8px; font-size: 14px; border-radius: 4px; border: 1px solid #ccc; margin-right: 5px; }
-    ul { list-style: none; padding: 0; }
-    li { background: #dfe6e9; margin: 5px 0; padding: 8px; border-radius: 4px; }
+    button:hover {
+      background-color: #2ecc71;
+      transform: scale(1.05);
+    }
+
+    input {
+      padding: 8px;
+      font-size: 14px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      margin-right: 5px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      max-width: 400px;
+      margin: 20px auto;
+    }
+
+    li {
+      background: #dfe6e9;
+      margin: 5px 0;
+      padding: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    li.completed {
+      text-decoration: line-through;
+      opacity: 0.6;
+      background: #b2bec3;
+    }
+
+    #hora {
+      font-size: 18px;
+      margin: 10px 0 30px 0;
+      color: #2d3436;
+    }
+
+    .nav-buttons {
+      margin-top: 30px;
+    }
   </style>
 </head>
 <body>
-  <h1>Servidor local en funcionamiento ✅</h1>
+
+  <h1>Servidor local ✅</h1>
   <p>¡Bienvenido a tus pruebas, Feli!</p>
 
-  <button onclick="mostrarHora()">Mostrar hora y fecha actual</button>
-  <p id="hora"></p>
+  <!-- Reloj en tiempo real -->
+  <div>
+    <button onclick="mostrarHora()">Mostrar hora y fecha</button>
+    <p id="hora">--:--:--</p>
+  </div>
 
-  <button onclick="alert('¡Hola Feli! Esto es un mensaje de prueba.')">Mensaje de prueba</button>
+  <!-- Mensaje de prueba -->
+  <div>
+    <button onclick="mostrarMensaje('¡Hola Feli! Esto es un mensaje de prueba.')">Mensaje de prueba</button>
+  </div>
 
-  <button onclick="cambiarFondo()">Cambiar fondo</button>
+  <!-- Cambiar fondo aleatorio -->
+  <div>
+    <button onclick="cambiarFondo()">Cambiar fondo</button>
+    <button onclick="cambiarTema()">Modo oscuro / claro</button>
+  </div>
 
+  <!-- Lista de tareas -->
   <h2>Lista de tareas</h2>
   <input type="text" id="tareaInput" placeholder="Escribe una tarea">
   <button onclick="agregarTarea()">Agregar</button>
   <ul id="tareas"></ul>
 
-  <button onclick="location.href='about.html'">Ir a About</button>
-  <button onclick="location.href='contact.html'">Ir a Contacto</button>
-  <button onclick="preguntarNombre()">Decime tu nombre</button>
+  <!-- Navegación -->
+  <div class="nav-buttons">
+    <button onclick="location.href='about.html'">About</button>
+    <button onclick="location.href='contact.html'">Contacto</button>
+  </div>
+
+  <!-- Pedir nombre al usuario -->
+  <div>
+    <button onclick="preguntarNombre()">Decime tu nombre</button>
+  </div>
 
   <script>
+    // Reloj en tiempo real
     function mostrarHora() {
       const ahora = new Date();
       const hora = ahora.toLocaleTimeString();
       const fecha = ahora.toLocaleDateString();
       document.getElementById('hora').innerText = `Fecha: ${fecha} | Hora: ${hora}`;
     }
+    setInterval(mostrarHora, 1000); // actualiza cada segundo
+
+    // Mensajes personalizados
+    function mostrarMensaje(texto) {
+      alert(texto);
+    }
+
+    // Cambiar fondo aleatorio
     function cambiarFondo() {
-      const colores = ['#f0f0f0','#ffeaa7','#fab1a0','#dfe6e9','#81ecec','#74b9ff','#d63031','#6c5ce7'];
+      const colores = ['#f0f0f0','#ffeaa7','#fab1a0','#dfe6e9','#81ecec','#74b9ff','#d63031','#6c5ce7','#fd79a8'];
       document.body.style.backgroundColor = colores[Math.floor(Math.random()*colores.length)];
     }
+
+    // Modo oscuro / claro
+    function cambiarTema() {
+      if(document.body.style.backgroundColor === 'rgb(240, 240, 240)' || document.body.style.backgroundColor === ''){
+        document.body.style.backgroundColor = '#2d3436';
+        document.body.style.color = '#dfe6e9';
+      } else {
+        document.body.style.backgroundColor = '#f0f0f0';
+        document.body.style.color = '#333';
+      }
+    }
+
+    // Lista de tareas interactiva
     function agregarTarea() {
       const input = document.getElementById('tareaInput');
       const tarea = input.value.trim();
       if(!tarea) return;
+
       const li = document.createElement('li');
       li.innerText = tarea;
+      li.onclick = () => li.classList.toggle('completed'); // marcar como completada
       document.getElementById('tareas').appendChild(li);
       input.value = '';
     }
+
+    // Pedir nombre al usuario
     function preguntarNombre() {
       const nombre = prompt("¿Cuál es tu nombre?");
       if(nombre) alert(`Hola ${nombre}, ¡bienvenido al servidor local!`);
     }
   </script>
+
 </body>
 </html>
