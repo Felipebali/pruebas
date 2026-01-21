@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Servidor Local</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      color: #333;
+      text-align: center;
+      padding: 50px;
+    }
+    h1 {
+      color: #2e86de;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin: 10px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+      background-color: #27ae60;
+      color: white;
+    }
+    button:hover {
+      background-color: #2ecc71;
+    }
+  </style>
+</head>
+<body>
+  <h1>Servidor local en funcionamiento ✅</h1>
+  <p>¡Bienvenido a tus pruebas, Feli!</p>
+
+  <button onclick="mostrarHora()">Mostrar hora actual</button>
+  <p id="hora"></p>
+
+  <button onclick="alert('¡Hola Feli! Esto es un mensaje de prueba.')">Mensaje de prueba</button>
+
+  <script>
+    function mostrarHora() {
+      const ahora = new Date();
+      document.getElementById('hora').innerText = "Hora actual: " + ahora.toLocaleTimeString();
+    }
+  </script>
+</body>
+</html>
