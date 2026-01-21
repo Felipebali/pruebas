@@ -24,10 +24,12 @@
       border-radius: 5px;
       background-color: #27ae60;
       color: white;
-      transition: background-color 0.3s;
+      transition: all 0.3s ease;
     }
     button:hover {
       background-color: #2ecc71;
+      transform: scale(1.05);
+      opacity: 0.9;
     }
     input {
       padding: 8px;
@@ -45,6 +47,11 @@
       margin: 5px 0;
       padding: 8px;
       border-radius: 4px;
+    }
+    /* Botón de Instagram específico */
+    .btn-ig {
+      background: #E1306C;
+      color: white;
     }
   </style>
 </head>
@@ -68,17 +75,19 @@
   <button onclick="agregarTarea()">Agregar</button>
   <ul id="tareas"></ul>
 
-  <!-- Botón para páginas secundarias -->
+  <!-- Botón para otra página -->
   <button onclick="location.href='about.html'">Ir a About</button>
   <button onclick="location.href='contact.html'">Ir a Contact</button>
   <button onclick="location.href='gallery.html'">Ir a Gallery</button>
   <button onclick="location.href='tasks.html'">Ir a Tasks</button>
 
-  <!-- Botón RPG -->
-  <button onclick="location.href='rpg.html'">Jugar Mini RPG 🎮</button>
-
   <!-- Pedir nombre al usuario -->
   <button onclick="preguntarNombre()">Decime tu nombre</button>
+
+  <!-- Botón de Instagram -->
+  <button class="btn-ig" onclick="window.open('https://www.instagram.com/alfajoresrustico/', '_blank')">
+    🌸 Visitar mi Instagram
+  </button>
 
   <script>
     // Mostrar hora y fecha
