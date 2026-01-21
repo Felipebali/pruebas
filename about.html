@@ -1,138 +1,21 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
   <meta charset="UTF-8">
-  <title>About - Servidor Local</title>
+  <title>About</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 50px;
-      transition: background-color 0.5s, color 0.5s;
-      background: linear-gradient(120deg, #f0f0f0, #81ecec);
-      background-size: 400% 400%;
-      animation: gradient 15s ease infinite;
-      color: #333;
-    }
-
-    @keyframes gradient {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    h1 {
-      color: #2e86de;
-      transition: color 0.5s;
-    }
-
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      margin: 10px;
-      cursor: pointer;
-      border: none;
-      border-radius: 5px;
-      background-color: #27ae60;
-      color: white;
-      transition: background-color 0.3s, transform 0.2s;
-    }
-
-    button:hover {
-      background-color: #2ecc71;
-      transform: scale(1.05);
-    }
-
-    ul {
-      list-style: none;
-      padding: 0;
-      margin-top: 20px;
-    }
-
-    li {
-      background: #dfe6e9;
-      margin: 5px 0;
-      padding: 8px;
-      border-radius: 4px;
-      transition: background 0.3s;
-    }
-
-    li:hover {
-      background: #b2bec3;
-    }
-
-    /* Modo oscuro */
-    body.dark {
-      background: #2c3e50;
-      color: #ecf0f1;
-    }
-    body.dark h1 { color: #81ecec; }
-    body.dark li { background: #34495e; }
-    body.dark li:hover { background: #4b6584; }
+    body { text-align:center; padding:50px; font-family:Arial; background:#f0f0f0; transition: background 0.5s; }
+    h1 { color: #2e86de; }
+    button { padding:10px 20px; margin:10px; border:none; border-radius:5px; background:#27ae60; color:#fff; cursor:pointer; transition:0.3s; }
+    button:hover { background:#2ecc71; }
+    p { max-width:400px; margin:auto; }
   </style>
 </head>
 <body>
-  <h1 id="saludo">Sobre mi servidor local</h1>
-  <p>Esto es una página secundaria para pruebas.</p>
+  <h1>Sobre mi servidor local</h1>
+  <p>Esta es una página secundaria para pruebas y demostraciones de funcionalidades. Desde aquí podés volver al inicio o ir a contacto.</p>
 
-  <!-- Saludo personalizado -->
-  <p id="nombreUsuario"></p>
-
-  <!-- Lista de proyectos / pruebas -->
-  <h2>Mis proyectos de prueba</h2>
-  <ul id="proyectos">
-    <li>Servidor Local básico</li>
-    <li>Lista de tareas interactiva</li>
-    <li>Fondo animado y modo oscuro</li>
-    <li>Saludo según hora y nombre</li>
-  </ul>
-
-  <!-- Botones -->
-  <button onclick="toggleDarkMode()">Modo oscuro / claro</button>
-  <button onclick="cambiarFondo()">Cambiar fondo</button>
-  <button onclick="location.href='index.html'">Volver a Index</button>
-  <button onclick="pedirNombre()">Decime tu nombre</button>
-
-  <script>
-    // Saludo según hora
-    const hora = new Date().getHours();
-    let saludo = "Hola";
-    if(hora < 12) saludo = "Buenos días";
-    else if(hora < 18) saludo = "Buenas tardes";
-    else saludo = "Buenas noches";
-    document.getElementById('saludo').innerText = `${saludo}, ¡Bienvenido a About!`;
-
-    // Modo oscuro / claro
-    function toggleDarkMode(){
-      document.body.classList.toggle('dark');
-      localStorage.setItem('darkMode', document.body.classList.contains('dark'));
-    }
-    // Recordar modo oscuro
-    if(localStorage.getItem('darkMode') === 'true') document.body.classList.add('dark');
-
-    // Cambiar fondo aleatorio
-    function cambiarFondo(){
-      const colores = ['#f0f0f0','#ffeaa7','#fab1a0','#dfe6e9','#81ecec','#74b9ff'];
-      const color = colores[Math.floor(Math.random() * colores.length)];
-      document.body.style.background = color;
-      localStorage.setItem('fondo', color);
-    }
-    // Recordar fondo
-    if(localStorage.getItem('fondo')) document.body.style.background = localStorage.getItem('fondo');
-
-    // Pedir nombre al usuario
-    function pedirNombre(){
-      const nombre = prompt("¿Cuál es tu nombre?");
-      if(nombre){
-        alert(`Hola ${nombre}, ¡bienvenido a About!`);
-        document.getElementById('nombreUsuario').innerText = `Usuario: ${nombre}`;
-        localStorage.setItem('nombre', nombre);
-      }
-    }
-    // Recordar nombre
-    if(localStorage.getItem('nombre')){
-      document.getElementById('nombreUsuario').innerText = `Usuario: ${localStorage.getItem('nombre')}`;
-    }
-  </script>
+  <button onclick="location.href='index.html'">Volver al Inicio</button>
+  <button onclick="location.href='contact.html'">Ir a Contacto</button>
 </body>
 </html>
