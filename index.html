@@ -68,16 +68,20 @@
   <button onclick="agregarTarea()">Agregar</button>
   <ul id="tareas"></ul>
 
-  <!-- Botón para otras páginas -->
+  <!-- Botón para páginas secundarias -->
   <button onclick="location.href='about.html'">Ir a About</button>
   <button onclick="location.href='contact.html'">Ir a Contact</button>
   <button onclick="location.href='gallery.html'">Ir a Gallery</button>
   <button onclick="location.href='tasks.html'">Ir a Tasks</button>
 
+  <!-- Botón RPG -->
+  <button onclick="location.href='rpg.html'">Jugar Mini RPG 🎮</button>
+
   <!-- Pedir nombre al usuario -->
   <button onclick="preguntarNombre()">Decime tu nombre</button>
 
   <script>
+    // Mostrar hora y fecha
     function mostrarHora() {
       const ahora = new Date();
       const hora = ahora.toLocaleTimeString();
@@ -85,12 +89,14 @@
       document.getElementById('hora').innerText = `Fecha: ${fecha} | Hora: ${hora}`;
     }
 
+    // Cambiar fondo aleatorio
     function cambiarFondo() {
       const colores = ['#f0f0f0', '#ffeaa7', '#fab1a0', '#dfe6e9', '#81ecec', '#74b9ff'];
       const color = colores[Math.floor(Math.random() * colores.length)];
       document.body.style.backgroundColor = color;
     }
 
+    // Lista de tareas
     function agregarTarea() {
       const input = document.getElementById('tareaInput');
       const tarea = input.value.trim();
@@ -101,6 +107,7 @@
       input.value = '';
     }
 
+    // Pedir nombre al usuario
     function preguntarNombre() {
       const nombre = prompt("¿Cuál es tu nombre?");
       if(nombre) alert(`Hola ${nombre}, ¡bienvenido al servidor local!`);
