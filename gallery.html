@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Galería - Servidor Local</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    color: #333;
+    text-align: center;
+    padding: 50px;
+    transition: background-color 0.5s;
+  }
+  h1 { color: #2e86de; }
+  .gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+  }
+  .gallery img {
+    width: 200px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+  }
+  .gallery img:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  }
+  button {
+    padding: 10px 20px;
+    margin: 10px 5px 0 0;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #27ae60;
+    color: white;
+    transition: background-color 0.3s;
+  }
+  button:hover { background-color: #2ecc71; }
+</style>
+</head>
+<body>
+
+<h1>Galería de Imágenes</h1>
+<p>Prueba de galería interactiva en tu servidor local.</p>
+
+<div class="gallery">
+  <img src="https://picsum.photos/300/200?random=1" alt="Imagen 1">
+  <img src="https://picsum.photos/300/200?random=2" alt="Imagen 2">
+  <img src="https://picsum.photos/300/200?random=3" alt="Imagen 3">
+  <img src="https://picsum.photos/300/200?random=4" alt="Imagen 4">
+  <img src="https://picsum.photos/300/200?random=5" alt="Imagen 5">
+  <img src="https://picsum.photos/300/200?random=6" alt="Imagen 6">
+</div>
+
+<div style="margin-top:20px;">
+  <button onclick="location.href='index.html'">🔙 Inicio</button>
+  <button onclick="location.href='about.html'">ℹ️ About</button>
+  <button onclick="location.href='contact.html'">✉️ Contacto</button>
+  <button onclick="cambiarFondo()">🎨 Cambiar fondo</button>
+</div>
+
+<script>
+function cambiarFondo() {
+  const colores = ['#f0f0f0','#ffeaa7','#fab1a0','#dfe6e9','#81ecec','#74b9ff','#a29bfe','#fd79a8'];
+  document.body.style.backgroundColor = colores[Math.floor(Math.random()*colores.length)];
+}
+</script>
+
+</body>
+</html>
